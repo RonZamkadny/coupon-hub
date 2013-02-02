@@ -1,0 +1,3 @@
+# Module couponhub
+# RPC service class, partial path of RPC policy file
+com.ronx.coupon.client.GreetingService, FA07AF800A8F7CC65D5019C534F228E4.gwt.rpc

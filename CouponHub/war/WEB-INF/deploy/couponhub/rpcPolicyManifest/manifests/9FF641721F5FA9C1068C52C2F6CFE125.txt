@@ -1,0 +1,2 @@
+serviceClass: com.ronx.coupon.client.GreetingService
+path: FA07AF800A8F7CC65D5019C534F228E4.gwt.rpc
