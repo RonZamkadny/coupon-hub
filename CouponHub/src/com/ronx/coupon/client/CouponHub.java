@@ -9,8 +9,11 @@ import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.gwt.event.dom.client.KeyUpEvent;
 import com.google.gwt.event.dom.client.KeyUpHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.ui.AbsolutePanel;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.DecoratedTabPanel;
 import com.google.gwt.user.client.ui.DialogBox;
+import com.google.gwt.user.client.ui.DockPanel;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
@@ -38,24 +41,21 @@ public class CouponHub implements EntryPoint {
 	/**
 	 * This is the entry point method.
 	 */
+	
+	private DecoratedTabPanel tabPanel;
+	
+	
 	public void onModuleLoad() {
-		final Button sendButton = new Button("Send");
-		final TextBox nameField = new TextBox();
-		nameField.setText("GWT User");
-		final Label errorLabel = new Label();
 
 		// We can add style names to widgets
-		sendButton.addStyleName("sendButton");
+
 
 		// Add the nameField and sendButton to the RootPanel
 		// Use RootPanel.get() to get the entire body element
-		RootPanel.get("nameFieldContainer").add(nameField);
-		RootPanel.get("sendButtonContainer").add(sendButton);
-		RootPanel.get("errorLabelContainer").add(errorLabel);
+
 
 		// Focus the cursor on the name field when the app loads
-		nameField.setFocus(true);
-		nameField.selectAll();
+
 
 		// Create the popup dialog box
 		final DialogBox dialogBox = new DialogBox();
@@ -66,14 +66,70 @@ public class CouponHub implements EntryPoint {
 		closeButton.getElement().setId("closeButton");
 		final Label textToServerLabel = new Label();
 		final HTML serverResponseLabel = new HTML();
-		VerticalPanel dialogVPanel = new VerticalPanel();
-		dialogVPanel.addStyleName("dialogVPanel");
-		dialogVPanel.add(new HTML("<b>Sending name to the server:</b>"));
-		dialogVPanel.add(textToServerLabel);
-		dialogVPanel.add(new HTML("<br><b>Server replies:</b>"));
-		dialogVPanel.add(serverResponseLabel);
-		dialogVPanel.setHorizontalAlignment(VerticalPanel.ALIGN_RIGHT);
-		dialogVPanel.add(closeButton);
+		
+//		AbsolutePanel commonPanel;
+//		{
+//			commonPanel = new AbsolutePanel();
+//			commonPanel
+//		}
+//
+		final Button sendButton;
+		{
+			sendButton = new Button("Send");
+			sendButton.addStyleName("sendButton");
+			RootPanel.get("sendButtonContainer").add(sendButton);
+		}
+		final TextBox nameField;
+		{
+			nameField = new TextBox();
+			nameField.setFocus(true);
+			nameField.selectAll();
+			nameField.setText("RONX");			
+			RootPanel.get("nameFieldContainer").add(nameField);			
+		}
+		final Label errorLabel;
+		{
+			errorLabel = new Label();
+			RootPanel.get("errorLabelContainer").add(errorLabel);			
+		}
+		
+		
+		{
+			VerticalPanel verticalPanel;
+			{
+				DockPanel navigationPanel = new DockPanel();
+				{
+					verticalPanel = new VerticalPanel();
+					verticalPanel.add(sendButton);
+					verticalPanel.add(nameField);
+					verticalPanel.add(errorLabel);
+				}
+				
+			}
+			tabPanel = new DecoratedTabPanel();
+			tabPanel.setWidth("100%");
+			tabPanel.setAnimationEnabled(true);
+			tabPanel.add(verticalPanel, "Tab");
+			tabPanel.selectTab(0);
+			RootPanel.get("tabPanel").add(tabPanel);			
+		}
+		
+
+
+
+		
+		VerticalPanel dialogVPanel;
+		{
+			dialogVPanel = new VerticalPanel();
+			dialogVPanel.addStyleName("dialogVPanel");
+			dialogVPanel.add(new HTML("<b>Sending name to the server:</b>"));
+			dialogVPanel.add(textToServerLabel);
+			dialogVPanel.add(new HTML("<br><b>Server replies:</b>"));
+			dialogVPanel.add(serverResponseLabel);
+			dialogVPanel.setHorizontalAlignment(VerticalPanel.ALIGN_RIGHT);
+			dialogVPanel.add(closeButton);
+			
+		}
 		dialogBox.setWidget(dialogVPanel);
 
 		// Add a handler to close the DialogBox
